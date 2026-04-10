@@ -1,20 +1,11 @@
 /* ==================== RESET Y NORMALIZACIÓN ==================== */
 
-/*
- * Selector universal (*) - Aplica a TODOS los elementos HTML
- * Elimina márgenes y paddings por defecto que los navegadores añaden
- * box-sizing: border-box hace que el padding y borde no aumenten el ancho total
- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*
- * Estilos base para el cuerpo de la página
- * Se aplica a la etiqueta <body>
- */
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg-primary);
@@ -24,12 +15,7 @@ body {
 
 /* ==================== VARIABLES CSS (TEMA CLARO) ==================== */
 
-/*
- * :root es la pseudo-clase que representa el elemento raíz (<html>)
- * Aquí se definen variables CSS globales para el tema claro
- */
 :root {
-    /* Colores principales */
     --bg-primary: #f8f9fa;
     --bg-secondary: #ffffff;
     --sidebar-bg: #ffffff;
@@ -42,7 +28,6 @@ body {
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     --hover-bg: #f1f3f4;
 
-    /* Colores de eventos - modo claro */
     --event-trabajo-bg: linear-gradient(135deg, #e3f2fd 0%, #bbdef5 100%);
     --event-trabajo-text: #0d47a1;
     --event-trabajo-border: #1976d2;
@@ -75,7 +60,6 @@ body.dark {
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
     --hover-bg: #2a2a2a;
 
-    /* Colores de eventos - modo oscuro */
     --event-trabajo-bg: linear-gradient(135deg, #1a3a5c 0%, #0d2a45 100%);
     --event-trabajo-text: #90caf9;
     --event-trabajo-border: #42a5f5;
@@ -100,7 +84,6 @@ body.dark {
     min-height: 100vh;
 }
 
-/* Sidebar moderno */
 .sidebar {
     width: 280px;
     background: var(--sidebar-bg);
@@ -409,7 +392,7 @@ body.dark .calendar-day.today {
     font-size: 1rem;
 }
 
-/* ==================== TARJETAS DE EVENTOS MEJORADAS ==================== */
+/* ==================== TARJETAS DE EVENTOS ==================== */
 
 .event-card {
     margin: 4px 0;
@@ -461,7 +444,7 @@ body.dark .calendar-day.today {
     margin-bottom: 2px;
 }
 
-/* ==================== VISTA SEMANA MEJORADA ==================== */
+/* ==================== VISTA SEMANA ==================== */
 
 .semana-view {
     display: grid;
@@ -504,7 +487,6 @@ body.dark .calendar-day.today {
     opacity: 0.7;
 }
 
-/* Tarjetas de eventos en semana */
 .event-card-semana {
     background: var(--card-bg);
     margin: 8px 0;
@@ -575,7 +557,7 @@ body.dark .calendar-day.today {
     overflow-y: auto;
 }
 
-/* ==================== VISTA DÍA MEJORADA ==================== */
+/* ==================== VISTA DÍA ==================== */
 
 .dia-view {
     background: var(--card-bg);
@@ -620,21 +602,21 @@ body.dark .calendar-day.today {
     box-shadow: var(--shadow-md);
 }
 
-/* Tarjetas de eventos en vista día */
 .event-card-dia {
     display: flex;
-    gap: 1.2rem;
-    padding: 1.2rem;
+    gap: 1rem;
+    padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 14px;
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
+    align-items: center;
 }
 
 .event-card-dia:hover {
-    transform: translateX(6px);
+    transform: translateX(4px);
     box-shadow: var(--shadow-md);
 }
 
@@ -696,7 +678,7 @@ body.dark .calendar-day.today {
     overflow-y: auto;
 }
 
-/* ==================== MODAL MEJORADO ==================== */
+/* ==================== MODAL RESPONSIVO ==================== */
 
 .modal {
     display: none;
@@ -709,18 +691,22 @@ body.dark .calendar-day.today {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     animation: fadeIn 0.3s;
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .modal-content {
     background: var(--bg-secondary);
-    margin: 5% auto;
-    padding: 2rem;
-    width: 90%;
-    max-width: 520px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
     border-radius: 24px;
     position: relative;
     box-shadow: var(--shadow-lg);
     animation: slideUp 0.3s;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-content h3 {
@@ -728,22 +714,24 @@ body.dark .calendar-day.today {
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
     font-weight: 600;
+    padding-right: 30px;
 }
 
 .close {
     position: absolute;
-    right: 1.2rem;
-    top: 1.2rem;
+    right: 1rem;
+    top: 1rem;
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--text-secondary);
     transition: all 0.2s;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    z-index: 10;
 }
 
 .close:hover {
@@ -751,19 +739,19 @@ body.dark .calendar-day.today {
     color: var(--text-primary);
 }
 
-/* Formulario del modal */
 #eventoForm input,
 #eventoForm textarea,
 #eventoForm select {
     width: 100%;
-    padding: 0.85rem;
-    margin: 0.6rem 0;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     background: var(--card-bg);
     color: var(--text-primary);
     font-family: inherit;
     transition: all 0.2s;
+    font-size: 0.95rem;
 }
 
 #eventoForm input:focus,
@@ -776,7 +764,7 @@ body.dark .calendar-day.today {
 
 #eventoForm textarea {
     resize: vertical;
-    min-height: 90px;
+    min-height: 80px;
 }
 
 .modal-buttons {
@@ -786,14 +774,16 @@ body.dark .calendar-day.today {
 }
 
 .btn-save,
-.btn-delete {
+.btn-delete,
+#btnEliminarEvento {
     flex: 1;
-    padding: 0.85rem;
+    padding: 0.75rem;
     border: none;
     border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.2s;
+    font-size: 0.95rem;
 }
 
 .btn-save {
@@ -814,6 +804,139 @@ body.dark .calendar-day.today {
 .btn-delete:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+#btnEliminarEvento {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+}
+
+#btnEliminarEvento:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+#btnEliminarEvento:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ==================== LISTA DE EVENTOS EN MODAL ==================== */
+
+.modal-eventos-dia {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.modal-divider span {
+    background: var(--bg-secondary);
+    padding: 0 0.5rem;
+}
+
+.lista-eventos-dia {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.evento-item-modal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: var(--card-bg);
+    border-radius: 10px;
+    border-left: 3px solid;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+    gap: 0.5rem;
+}
+
+.evento-item-modal:hover {
+    transform: translateX(3px);
+    box-shadow: var(--shadow-md);
+}
+
+.evento-info-modal {
+    flex: 1;
+    min-width: 0;
+}
+
+.evento-hora-modal {
+    font-size: 0.7rem;
+    font-weight: bold;
+    opacity: 0.8;
+    margin-bottom: 2px;
+}
+
+.evento-titulo-modal {
+    font-size: 0.85rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.evento-desc-modal {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 2px;
+    word-break: break-word;
+}
+
+.btn-editar-modal {
+    background: rgba(66, 133, 244, 0.1);
+    border: none;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4285f4;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-editar-modal:hover {
+    background: #4285f4;
+    color: white;
+}
+
+.sin-eventos-modal {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.evento-item-modal.trabajo {
+    border-left-color: #1976d2;
+    background: var(--event-trabajo-bg);
+}
+
+.evento-item-modal.personal {
+    border-left-color: #9c27b0;
+    background: var(--event-personal-bg);
+}
+
+.evento-item-modal.reunion {
+    border-left-color: #ff9800;
+    background: var(--event-reunion-bg);
+}
+
+.evento-item-modal.recordatorio {
+    border-left-color: #4caf50;
+    background: var(--event-recordatorio-bg);
 }
 
 /* ==================== NOTIFICACIÓN ==================== */
@@ -840,7 +963,7 @@ body.dark .calendar-day.today {
     cursor: grabbing;
 }
 
-/* ==================== SCROLLBAR PERSONALIZADA ==================== */
+/* ==================== SCROLLBAR ==================== */
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -859,6 +982,228 @@ body.dark .calendar-day.today {
 
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #3367d6, #6b8db3);
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #4285f4;
+    border-radius: 10px;
+}
+
+/* ==================== CONTROL DE VISTAS ==================== */
+
+.vista {
+    display: none;
+}
+
+.vista.activa {
+    display: block;
+}
+
+#vistaMes,
+#vistaSemana,
+#vistaDia {
+    display: none;
+}
+
+#vistaMes.activa,
+#vistaSemana.activa,
+#vistaDia.activa {
+    display: block;
+}
+
+/* ==================== ANIMACIONES ==================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ==================== VALIDACIÓN ==================== */
+
+#eventoHora.error,
+#eventoFecha.error,
+#eventoTitulo.error {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.05) !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+.error-tooltip {
+    position: relative;
+}
+
+.error-tooltip::after {
+    content: attr(data-error);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+    animation: fadeIn 0.2s;
+}
+
+.calendar-day.has-conflict {
+    position: relative;
+}
+
+.calendar-day.has-conflict::after {
+    content: '⚠️';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.event-card.conflict {
+    animation: pulse 1s infinite;
+    border-left-color: #dc3545 !important;
+}
+
+.warning-message {
+    background: linear-gradient(135deg, #fff3cd, #ffe69c);
+    color: #856404;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 4px solid #ffc107;
+    animation: slideDown 0.3s;
+}
+
+body.dark .warning-message {
+    background: linear-gradient(135deg, #2c2c1a, #3a3a20);
+    color: #ffd966;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ==================== BOTONES ELIMINAR ==================== */
+
+.btn-eliminar-evento {
+    background: rgba(220, 53, 69, 0.1);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #dc3545;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-eliminar-evento:hover {
+    background: #dc3545;
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-eliminar-evento i {
+    font-size: 0.85rem;
+}
+
+.btn-eliminar-evento-semana {
+    background: rgba(220, 53, 69, 0.1);
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #dc3545;
+    width: 100%;
+}
+
+.btn-eliminar-evento-semana:hover {
+    background: #dc3545;
+    color: white;
 }
 
 /* ==================== RESPONSIVE ==================== */
@@ -880,8 +1225,7 @@ body.dark .calendar-day.today {
     }
 
     .sidebar h2,
-    .sidebar h3,
-    .sidebar .logo span {
+    .sidebar h3 {
         display: none;
     }
 
@@ -926,9 +1270,49 @@ body.dark .calendar-day.today {
         font-size: 0.7rem;
     }
 
+    .modal {
+        padding: 15px;
+    }
+
     .modal-content {
-        margin: 20% auto;
         padding: 1.2rem;
+        max-width: 95%;
+        max-height: 85vh;
+    }
+
+    .modal-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    #eventoForm input,
+    #eventoForm textarea,
+    #eventoForm select {
+        padding: 0.65rem;
+        font-size: 0.9rem;
+    }
+
+    .modal-buttons {
+        gap: 0.75rem;
+    }
+
+    .btn-save,
+    .btn-delete,
+    #btnEliminarEvento {
+        padding: 0.65rem;
+        font-size: 0.9rem;
+    }
+
+    .lista-eventos-dia {
+        max-height: 200px;
+    }
+
+    .evento-item-modal {
+        padding: 0.6rem;
+    }
+
+    .evento-titulo-modal {
+        font-size: 0.8rem;
     }
 }
 
@@ -963,289 +1347,118 @@ body.dark .calendar-day.today {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
     }
-}
 
-/* ==================== ANIMACIONES ==================== */
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+    .modal {
+        padding: 10px;
     }
 
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
+    .modal-content {
+        padding: 1rem;
+        max-height: 90vh;
+        border-radius: 20px;
     }
 
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
+    .modal-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
     }
 
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* ==================== VALIDACIÓN DE FORMULARIO ==================== */
-
-/* Resaltado de campos con error */
-#eventoHora.error,
-#eventoFecha.error,
-#eventoTitulo.error {
-    border-color: #dc3545 !important;
-    background-color: rgba(220, 53, 69, 0.05) !important;
-    animation: shake 0.3s ease-in-out;
-}
-
-/* Animación de sacudida para el campo en error */
-@keyframes shake {
-
-    0%,
-    100% {
-        transform: translateX(0);
+    #eventoForm input,
+    #eventoForm textarea,
+    #eventoForm select {
+        padding: 0.55rem;
+        margin: 0.4rem 0;
+        font-size: 0.85rem;
+        border-radius: 10px;
     }
 
-    25% {
-        transform: translateX(-5px);
+    #eventoForm textarea {
+        min-height: 60px;
     }
 
-    75% {
-        transform: translateX(5px);
-    }
-}
-
-/* Tooltip de error personalizado */
-.error-tooltip {
-    position: relative;
-}
-
-.error-tooltip::after {
-    content: attr(data-error);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    z-index: 1000;
-    margin-bottom: 5px;
-    animation: fadeIn 0.2s;
-}
-
-/* Indicador visual de conflicto en el calendario */
-.calendar-day.has-conflict {
-    position: relative;
-}
-
-.calendar-day.has-conflict::after {
-    content: '⚠️';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-
-/* Evento con conflicto visual */
-.event-card.conflict {
-    animation: pulse 1s infinite;
-    border-left-color: #dc3545 !important;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
+    .modal-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
     }
 
-    50% {
-        opacity: 0.6;
+    .btn-save,
+    .btn-delete,
+    #btnEliminarEvento {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+        width: 100%;
+    }
+
+    .modal-eventos-dia {
+        margin-top: 1rem;
+        padding-top: 0.8rem;
+    }
+
+    .modal-divider {
+        margin-bottom: 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    .lista-eventos-dia {
+        max-height: 180px;
+    }
+
+    .evento-item-modal {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.6rem;
+    }
+
+    .evento-info-modal {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-editar-modal {
+        align-self: flex-end;
+        padding: 4px 8px;
+        font-size: 0.65rem;
+    }
+
+    .evento-titulo-modal {
+        font-size: 0.8rem;
+    }
+
+    .evento-desc-modal {
+        font-size: 0.65rem;
+    }
+
+    .close {
+        right: 0.8rem;
+        top: 0.8rem;
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
     }
 }
 
-/* Mensaje de advertencia en el modal */
-.warning-message {
-    background: linear-gradient(135deg, #fff3cd, #ffe69c);
-    color: #856404;
-    padding: 10px 15px;
-    border-radius: 10px;
-    margin: 10px 0;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-left: 4px solid #ffc107;
-    animation: slideDown 0.3s;
-}
-
-body.dark .warning-message {
-    background: linear-gradient(135deg, #2c2c1a, #3a3a20);
-    color: #ffd966;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-10px);
-        opacity: 0;
+@media (max-width: 380px) {
+    .modal-content {
+        padding: 0.8rem;
     }
 
-    to {
-        transform: translateY(0);
-        opacity: 1;
+    .modal-content h3 {
+        font-size: 1rem;
     }
-}
 
-/* Botón eliminar dentro de tarjeta de evento */
-.btn-eliminar-evento {
-    background: rgba(220, 53, 69, 0.1);
-    border: none;
-    border-radius: 8px;
-    padding: 6px 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #dc3545;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    #eventoForm input,
+    #eventoForm textarea,
+    #eventoForm select {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
 
-.btn-eliminar-evento:hover {
-    background: #dc3545;
-    color: white;
-    transform: scale(1.05);
-}
+    .evento-hora-modal {
+        font-size: 0.6rem;
+    }
 
-.btn-eliminar-evento i {
-    font-size: 0.85rem;
-}
-
-/* Ajuste para tarjetas de evento en vista día */
-.event-card-dia {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-    align-items: center;
-}
-
-.event-card-dia:hover {
-    transform: translateX(4px);
-    box-shadow: var(--shadow-md);
-}
-
-.event-info-dia {
-    flex: 1;
-}
-
-.btn-eliminar-evento-semana {
-    background: rgba(220, 53, 69, 0.1);
-    border: none;
-    border-radius: 6px;
-    padding: 4px 8px;
-    margin-top: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #dc3545;
-    width: 100%;
-}
-
-.btn-eliminar-evento-semana:hover {
-    background: #dc3545;
-    color: white;
-}
-
-/* Mejoras para el modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    animation: fadeIn 0.3s;
-}
-
-.modal-content {
-    background: var(--bg-secondary);
-    margin: 5% auto;
-    padding: 2rem;
-    width: 90%;
-    max-width: 520px;
-    border-radius: 24px;
-    position: relative;
-    box-shadow: var(--shadow-lg);
-    animation: slideUp 0.3s;
-}
-
-/* Botón eliminar en el modal */
-#btnEliminarEvento {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-#btnEliminarEvento:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-#btnEliminarEvento:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Control de visibilidad de vistas */
-.vista {
-    display: none;
-}
-
-.vista.activa {
-    display: block;
-}
-
-/* Asegurar que la vista día también se oculte correctamente */
-#vistaMes,
-#vistaSemana,
-#vistaDia {
-    display: none;
-}
-
-#vistaMes.activa,
-#vistaSemana.activa,
-#vistaDia.activa {
-    display: block;
+    .evento-titulo-modal {
+        font-size: 0.75rem;
+    }
 }

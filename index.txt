@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<!-- 
+    Declaración del tipo de documento HTML5.
+    Indica al navegador que debe interpretar este archivo como HTML5.
+-->
+
+<html lang="es">
+<!-- 
+    Etiqueta raíz del documento.
+    lang="es" especifica que el idioma principal del contenido es español.
+    Esto ayuda a motores de búsqueda y lectores de pantalla.
+-->
+
+<head>
+    <!-- 
+        Cabecera del documento: contiene metadatos, enlaces a recursos externos,
+        estilos y scripts que no se muestran visualmente en la página.
+    -->
+
+    <meta charset="UTF-8">
+    <!-- 
+        Especifica la codificación de caracteres UTF-8.
+        Permite usar caracteres especiales como ñ, tildes, emojis, etc.
+        Es la codificación estándar para aplicaciones web modernas.
+    -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <!-- 
+        Configura la ventana gráfica (viewport) para diseño responsivo.
+        - width=device-width: El ancho se adapta al dispositivo.
+        - initial-scale=1.0: Nivel de zoom inicial normal.
+        - user-scalable=yes: Permite al usuario hacer zoom (accesibilidad).
+    -->
+
+    <title>Agenda Inteligente | Calendario interactivo</title>
+    <!-- 
+        Título que aparece en la pestaña del navegador.
+        Es importante para SEO y experiencia de usuario.
+    -->
+
+    <link rel="stylesheet" href="styles.css">
+    <!-- 
+        Enlaza la hoja de estilos CSS externa.
+        rel="stylesheet" indica que es una hoja de estilos.
+        href apunta al archivo styles.css (debe estar en la misma carpeta).
+    -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet">
+    <!-- 
+        Importa la fuente 'Inter' desde Google Fonts.
+        Incluye varios pesos (300,400,500,600,700) para diferentes estilos.
+        Mejora la tipografía y legibilidad de la aplicación.
+    -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 
+        Importa Font Awesome 6 (iconos vectoriales).
+        Proporciona iconos como calendario, luna, sol, flechas, etc.
+        Mejora la interfaz visual sin necesidad de imágenes.
+    -->
+
+    <!-- Favicon para la pestaña del navegador -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234285f4'/%3E%3Ctext x='50' y='72' font-size='55' text-anchor='middle' fill='white' font-family='Arial'%3E📅%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234285f4'/%3E%3Ctext x='50' y='72' font-size='55' text-anchor='middle' fill='white' font-family='Arial'%3E📅%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+    <!-- 
+        Cuerpo del documento: Contiene todo el contenido visible de la página.
+        Todo lo que el usuario ve e interactúa está dentro de esta etiqueta.
+    -->
+
+    <div class="app-container">
+        <!-- 
+            Contenedor principal de la aplicación.
+            Usa display: flex en CSS para crear un layout de dos columnas:
+            - Sidebar (menú lateral izquierdo)
+            - Main content (área del calendario)
+        -->
+
+        <!-- Sidebar / Panel de control -->
+        <aside class="sidebar">
+            <!-- 
+                Etiqueta semántica <aside> para contenido complementario.
+                Representa el menú lateral con controles y opciones.
+                Contiene: logo, botones, vistas, filtros y tema oscuro.
+            -->
+
+            <div class="logo">
+                <!-- 
+                    Contenedor del logo y título de la aplicación.
+                    Proporciona identidad visual y branding.
+                -->
+                <i class="fas fa-calendar-alt"></i>
+                <!-- 
+                    Icono de calendario de Font Awesome.
+                    fa-solid fa-calendar-alt representa un calendario con eventos.
+                -->
+                <h2>AgendaPro</h2>
+                <!-- 
+                    Título/Nombre de la aplicación.
+                    Nivel de encabezado h2 (importancia secundaria).
+                -->
+            </div>
+
+            <button id="btnAgregarEvento" class="btn-primary">
+                <!-- 
+                    Botón principal para crear nuevos eventos.
+                    id="btnAgregarEvento": Identificador único para JavaScript.
+                    class="btn-primary": Estilo principal (azul, llamativo).
+                -->
+                <i class="fas fa-plus"></i> Nuevo evento
+                <!-- 
+                    Icono de más (+) y texto descriptivo.
+                -->
+            </button>
+
+            <div class="vistas">
+                <!-- 
+                    Sección de control de vistas del calendario.
+                -->
+                <h3>Vistas</h3>
+                <!-- 
+                    Subtítulo de la sección.
+                    h3 indica nivel terciario de importancia.
+                -->
+
+                <div class="vista-buttons">
+                    <!-- 
+                        Contenedor de botones para cambiar entre vistas.
+                        Usa flexbox para disposición vertical.
+                    -->
+
+                    <button data-vista="mes" class="vista-btn active">
+                        <!-- 
+                            Botón para vista mensual.
+                            data-vista="mes": Atributo personalizado para identificar la vista.
+                            class="vista-btn active": Estilo base y estado activo.
+                        -->
+                        <i class="fas fa-calendar-week"></i> Mes
+                        <!-- Icono de calendario semanal (representa mes) y texto -->
+                    </button>
+
+                    <button data-vista="semana" class="vista-btn">
+                        <!-- Botón para vista semanal -->
+                        <i class="fas fa-calendar-week"></i> Semana
+                    </button>
+
+                    <button data-vista="dia" class="vista-btn">
+                        <!-- Botón para vista diaria -->
+                        <i class="fas fa-calendar-day"></i> Día
+                    </button>
+                </div>
+            </div>
+
+            <div class="filtros">
+                <!-- Sección de filtros para eventos por tipo -->
+                <h3>Filtrar por tipo</h3>
+                <!-- Subtítulo de la sección de filtros -->
+
+                <select id="filtroTipo">
+                    <!-- 
+                        Menú desplegable (select) para elegir tipo de evento.
+                        id="filtroTipo": Identificador para JavaScript.
+                    -->
+                    <option value="todos">Todos</option>
+                    <!-- Opción para mostrar todos los eventos sin filtrar -->
+
+                    <option value="trabajo">💼 Trabajo</option>
+                    <!-- 
+                        Opción para filtrar eventos de tipo trabajo.
+                        value="trabajo": Valor que se enviará a JavaScript.
+                        Incluye emoji para mejor experiencia visual.
+                    -->
+
+                    <option value="personal">🏠 Personal</option>
+                    <!-- Filtro para eventos personales -->
+
+                    <option value="reunion">👥 Reunión</option>
+                    <!-- Filtro para reuniones -->
+
+                    <option value="recordatorio">⏰ Recordatorio</option>
+                    <!-- Filtro para recordatorios -->
+                </select>
+            </div>
+
+            <div class="theme-toggle">
+                <!-- 
+                    Sección para cambiar entre tema claro/oscuro.
+                    Incluye íconos de sol y luna con un switch/toggle.
+                -->
+                <i class="fas fa-sun"></i>
+                <!-- Ícono de sol (modo claro) -->
+
+                <label class="switch">
+                    <!-- 
+                        Contenedor del switch personalizado.
+                        Usa CSS para crear un toggle estilizado.
+                    -->
+                    <input type="checkbox" id="darkModeToggle">
+                    <!-- 
+                        Checkbox oculto que controla el tema.
+                        id="darkModeToggle": Identificador para JavaScript.
+                        Cuando está checked = modo oscuro activado.
+                    -->
+                    <span class="slider round"></span>
+                    <!-- 
+                        Elemento visual del switch (la bolita deslizante).
+                        CSS transforma esto en un toggle animado.
+                    -->
+                </label>
+
+                <i class="fas fa-moon"></i>
+                <!-- Ícono de luna (modo oscuro) -->
+            </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- 
+                Etiqueta semántica <main> para el contenido principal.
+                Representa el área donde se muestra el calendario.
+            -->
+
+            <!-- Cabecera de navegación -->
+            <div class="calendar-header">
+                <!-- 
+                    Barra superior con controles de navegación del calendario.
+                    Contiene: botones anterior, siguiente, título y botón Hoy.
+                -->
+
+                <button id="btnPrev">
+                    <!-- Botón para navegar hacia atrás (mes/semana/día anterior) -->
+                    <i class="fas fa-chevron-left"></i>
+                    <!-- Icono de flecha izquierda -->
+                </button>
+
+                <h2 id="fechaActual"></h2>
+                <!-- 
+                    Muestra la fecha actual (mes/año o semana o día según la vista).
+                    id="fechaActual": JavaScript actualizará este texto.
+                    h2: Importancia secundaria, tamaño grande.
+                -->
+
+                <button id="btnNext">
+                    <!-- Botón para navegar hacia adelante -->
+                    <i class="fas fa-chevron-right"></i>
+                    <!-- Icono de flecha derecha -->
+                </button>
+
+                <button id="btnHoy" class="btn-hoy">
+                    <!-- Botón para volver al día actual -->
+                    <i class="fas fa-calendar-day"></i> Hoy
+                    <!-- Icono de calendario día y texto "Hoy" -->
+                </button>
+            </div>
+
+            <!-- Vistas del calendario -->
+            <div id="vistaMes" class="vista activa">
+                <!-- 
+                    Contenedor de la vista mensual.
+                    id="vistaMes": Identificador único.
+                    class="vista": Base para todas las vistas.
+                    class="activa": Visible por defecto (display: block).
+                -->
+                <div class="calendar-grid" id="calendarioGrid"></div>
+                <!-- 
+                    Grid (cuadrícula) que contendrá los días del mes.
+                    id="calendarioGrid": JavaScript renderizará aquí el calendario.
+                -->
+            </div>
+
+            <div id="vistaSemana" class="vista">
+                <!-- Contenedor de la vista semanal (oculta por defecto) -->
+                <div class="semana-view" id="semanaGrid"></div>
+                <!-- Grid para mostrar los 7 días de la semana -->
+            </div>
+
+            <div id="vistaDia" class="vista">
+                <!-- Contenedor de la vista diaria (oculta por defecto) -->
+                <div class="dia-view" id="diaGrid"></div>
+                <!-- Área para mostrar los eventos de un solo día -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para eventos -->
+    <div id="modalEvento" class="modal">
+        <!-- 
+            Modal: Ventana emergente para crear/editar eventos.
+            id="modalEvento": Identificador para JavaScript.
+            class="modal": Estilos de fondo semitransparente y centrado.
+            Por defecto está oculto (display: none).
+        -->
+
+        <div class="modal-content">
+            <!-- 
+                Contenedor del contenido del modal.
+                Fondo blanco (o del tema), bordes redondeados, sombra.
+            -->
+
+            <span class="close">&times;</span>
+            <!-- 
+                Botón para cerrar el modal.
+                &times; es el símbolo de multiplicación (X).
+                Al hacer clic, JavaScript oculta el modal.
+            -->
+
+            <h3 id="modalTitulo">Nuevo evento</h3>
+            <!-- 
+                Título dinámico del modal.
+                Cambia entre "Nuevo evento" y "Editar evento" según la acción.
+            -->
+
+            <form id="eventoForm">
+                <!-- 
+                    Formulario para capturar datos del evento.
+                    id="eventoForm": JavaScript maneja el envío.
+                    No tiene action ni method (se maneja con JavaScript).
+                -->
+
+                <input type="hidden" id="eventoId">
+                <!-- 
+                    Campo oculto para almacenar el ID del evento.
+                    Cuando se edita, contiene el ID; cuando es nuevo, está vacío.
+                -->
+
+                <input type="text" id="eventoTitulo" placeholder="Título del evento" required>
+                <!-- 
+                    Campo de texto para el título.
+                    required: El navegador valida que no esté vacío.
+                    placeholder: Texto de ayuda dentro del campo.
+                -->
+
+                <textarea id="eventoDescripcion" placeholder="Descripción"></textarea>
+                <!-- 
+                    Área de texto para descripción (multilínea).
+                    No es obligatorio (sin required).
+                -->
+
+                <input type="date" id="eventoFecha" required>
+                <!-- 
+                    Selector de fecha nativo del navegador.
+                    required: Obligatorio.
+                    Formato: YYYY-MM-DD.
+                -->
+
+                <input type="time" id="eventoHora" required>
+                <!-- 
+                    Selector de hora nativo del navegador.
+                    required: Obligatorio.
+                    Formato: HH:MM (24 horas).
+                -->
+
+                <select id="eventoTipo">
+                    <!-- Selector de tipo de evento -->
+                    <option value="trabajo">💼 Trabajo</option>
+                    <option value="personal">🏠 Personal</option>
+                    <option value="reunion">👥 Reunión</option>
+                    <option value="recordatorio">⏰ Recordatorio</option>
+                </select>
+
+                <div class="modal-buttons">
+                    <!-- Contenedor flex para los botones -->
+                    <button type="submit" class="btn-save">Guardar</button>
+                    <!-- 
+                        Botón para guardar/actualizar.
+                        type="submit": Envía el formulario.
+                        class="btn-save": Estilo verde/azul.
+                    -->
+
+                    <button type="button" id="btnEliminarEvento" class="btn-delete">Eliminar</button>
+                    <!-- 
+                        Botón para eliminar evento.
+                        type="button": No envía el formulario (evita submit).
+                        Solo visible cuando se edita un evento existente.
+                        class="btn-delete": Estilo rojo.
+                    -->
+                </div>
+            </form>
+
+            <!-- SECCIÓN DE EVENTOS DEL DÍA - CORREGIDA -->
+            <div class="modal-eventos-dia" id="modalEventosDia">
+                <div class="modal-divider">
+                    <span>📅 Eventos de este día</span>
+                </div>
+                <div id="listaEventosDia" class="lista-eventos-dia">
+                    <!-- Aquí se cargarán los eventos dinámicamente -->
+                    <div class="sin-eventos-modal">📭 No hay eventos programados para este día</div>
+                </div>
+            </div>
+            <!-- FIN DE LA SECCIÓN -->
+
+        </div>
+    </div>
+
+    <!-- Notificación flotante -->
+    <div id="notificacion" class="notificacion"></div>
+    <!-- 
+        Contenedor para notificaciones temporales.
+        id="notificacion": JavaScript muestra mensajes aquí.
+        class="notificacion": Estilos fijos, oculto por defecto.
+        Aparece en la esquina inferior derecha con animación.
+    -->
+
+    <script src="script.js"></script>
+    <!-- 
+        Enlace al archivo JavaScript externo.
+        Contiene toda la lógica de la aplicación:
+        - Gestión de eventos (CRUD)
+        - Renderizado de calendario
+        - Drag & drop
+        - Notificaciones
+        - Modo oscuro
+        - localStorage
+        - etc.
+        Se carga al final del body para que el DOM esté listo.
+    -->
+</body>
+
+</html>

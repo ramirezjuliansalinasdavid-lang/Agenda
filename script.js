@@ -1,12 +1,10 @@
 // ==================== GESTIÓN DE EVENTOS Y CALENDARIO ====================
 
-// Variables globales
 let eventos = [];
 let vistaActual = 'mes';
 let fechaActual = new Date();
 let eventoEnEdicion = null;
 
-// Elementos del DOM
 const calendarioGrid = document.getElementById('calendarioGrid');
 const semanaGrid = document.getElementById('semanaGrid');
 const diaGrid = document.getElementById('diaGrid');
@@ -16,7 +14,6 @@ const eventoForm = document.getElementById('eventoForm');
 const filtroTipo = document.getElementById('filtroTipo');
 const darkModeToggle = document.getElementById('darkModeToggle');
 
-// ==================== INICIALIZACIÓN ====================
 function init() {
     cargarEventos();
     configurarEventListeners();
@@ -25,7 +22,6 @@ function init() {
     verificarNotificaciones();
 }
 
-// Cargar eventos desde localStorage
 function cargarEventos() {
     const guardados = localStorage.getItem('eventos');
     if (guardados) {
@@ -80,6 +76,49 @@ function cargarEventos() {
             }
         ];
         guardarEventos();
+    }
+}
+
+function mostrarEventosDelDiaEnModal(fecha) {
+    const modalEventosDiv = document.getElementById('modalEventosDia');
+    const listaEventosDiv = document.getElementById('listaEventosDia');
+
+    if (!modalEventosDiv || !listaEventosDiv) return;
+
+    let eventosDelDia = eventos.filter(e => e.fecha === fecha);
+    eventosDelDia = filtrarEventos(eventosDelDia);
+    eventosDelDia.sort((a, b) => a.hora.localeCompare(b.hora));
+
+    if (eventosDelDia.length === 0) {
+        listaEventosDiv.innerHTML = '<div class="sin-eventos-modal">📭 No hay eventos programados para este día</div>';
+        modalEventosDiv.style.display = 'block';
+        return;
+    }
+
+    let html = '';
+    eventosDelDia.forEach(evento => {
+        html += `
+            <div class="evento-item-modal ${evento.tipo}" data-id="${evento.id}">
+                <div class="evento-info-modal">
+                    <div class="evento-hora-modal">🕐 ${evento.hora}</div>
+                    <div class="evento-titulo-modal"><strong>${evento.titulo}</strong></div>
+                    <div class="evento-desc-modal">${evento.descripcion || 'Sin descripción'}</div>
+                </div>
+                <button class="btn-editar-modal" onclick="editarEventoDesdeModal(${evento.id})">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>
+        `;
+    });
+
+    listaEventosDiv.innerHTML = html;
+    modalEventosDiv.style.display = 'block';
+}
+
+function editarEventoDesdeModal(eventId) {
+    const evento = eventos.find(ev => ev.id === eventId);
+    if (evento) {
+        abrirModal(evento);
     }
 }
 
@@ -153,15 +192,21 @@ function navegar(direccion) {
 }
 
 function irAHoy() {
-    fechaActual = new Date();
-    renderizarVista();
+    const hoy = new Date();
+    fechaActual = hoy;
+    if (vistaActual !== 'mes') {
+        cambiarVista('mes');
+    } else {
+        renderizarVista();
+    }
+    if (typeof mostrarNotificacion === 'function') {
+        mostrarNotificacion('📅 Mostrando el mes actual', 'success');
+    }
 }
 
 function cambiarVista(vista) {
-    // Guardar la nueva vista
     vistaActual = vista;
 
-    // Actualizar clases activas en los botones
     const vistaBtns = document.querySelectorAll('.vista-btn');
     vistaBtns.forEach(btn => {
         if (btn.getAttribute('data-vista') === vista) {
@@ -171,17 +216,14 @@ function cambiarVista(vista) {
         }
     });
 
-    // Ocultar TODAS las vistas correctamente
     const vistaMes = document.getElementById('vistaMes');
     const vistaSemana = document.getElementById('vistaSemana');
     const vistaDia = document.getElementById('vistaDia');
 
-    // Ocultar todas
     if (vistaMes) vistaMes.classList.remove('activa');
     if (vistaSemana) vistaSemana.classList.remove('activa');
     if (vistaDia) vistaDia.classList.remove('activa');
 
-    // Mostrar solo la vista seleccionada
     if (vista === 'mes' && vistaMes) {
         vistaMes.classList.add('activa');
     } else if (vista === 'semana' && vistaSemana) {
@@ -190,14 +232,12 @@ function cambiarVista(vista) {
         vistaDia.classList.add('activa');
     }
 
-    // Renderizar el contenido
     renderizarVista();
 }
 
 function renderizarVista() {
     const opciones = { month: 'long', year: 'numeric' };
     fechaActualSpan.textContent = fechaActual.toLocaleDateString('es-ES', opciones);
-
     if (vistaActual === 'mes') renderizarMes();
     else if (vistaActual === 'semana') renderizarSemana();
     else renderizarDia();
@@ -210,13 +250,7 @@ function renderizarMes() {
     const inicioCalendario = new Date(primerDia);
     inicioCalendario.setDate(primerDia.getDate() - primerDia.getDay());
 
-    let html = '<div class="calendar-day-header">D</div>' +
-        '<div class="calendar-day-header">L</div>' +
-        '<div class="calendar-day-header">M</div>' +
-        '<div class="calendar-day-header">M</div>' +
-        '<div class="calendar-day-header">J</div>' +
-        '<div class="calendar-day-header">V</div>' +
-        '<div class="calendar-day-header">S</div>';
+    let html = '<div class="calendar-day-header">D</div><div class="calendar-day-header">L</div><div class="calendar-day-header">M</div><div class="calendar-day-header">M</div><div class="calendar-day-header">J</div><div class="calendar-day-header">V</div><div class="calendar-day-header">S</div>';
 
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
@@ -224,11 +258,9 @@ function renderizarMes() {
     for (let i = 0; i < 42; i++) {
         const fechaCelda = new Date(inicioCalendario);
         fechaCelda.setDate(inicioCalendario.getDate() + i);
-
         const esMesActual = fechaCelda.getMonth() === mes;
         const esHoy = fechaCelda.toDateString() === hoy.toDateString();
         const fechaStr = fechaCelda.toISOString().split('T')[0];
-
         let eventosDia = eventos.filter(e => e.fecha === fechaStr);
         eventosDia = filtrarEventos(eventosDia);
 
@@ -247,7 +279,6 @@ function renderizarMes() {
     }
 
     if (calendarioGrid) calendarioGrid.innerHTML = html;
-
     asignarEventosClick();
     asignarDragDrop();
     asignarClickDia();
@@ -256,7 +287,6 @@ function renderizarMes() {
 function renderizarSemana() {
     const inicioSemana = new Date(fechaActual);
     inicioSemana.setDate(fechaActual.getDate() - fechaActual.getDay());
-
     let html = '<div class="semana-view">';
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
@@ -264,10 +294,8 @@ function renderizarSemana() {
         const dia = new Date(inicioSemana);
         dia.setDate(inicioSemana.getDate() + i);
         const fechaStr = dia.toISOString().split('T')[0];
-
         let eventosDia = eventos.filter(e => e.fecha === fechaStr);
         eventosDia = filtrarEventos(eventosDia);
-
         const nombreDia = diasSemana[dia.getDay()];
         const numeroDia = dia.getDate();
 
@@ -291,18 +319,15 @@ function renderizarSemana() {
 
     html += '</div>';
     if (semanaGrid) semanaGrid.innerHTML = html;
-
     asignarEventosClickSemana();
     asignarClickDiaSemana();
 }
 
 function renderizarDia() {
     const fechaStr = fechaActual.toISOString().split('T')[0];
-
     let eventosDia = eventos.filter(e => e.fecha === fechaStr);
     eventosDia = filtrarEventos(eventosDia);
     eventosDia.sort((a, b) => a.hora.localeCompare(b.hora));
-
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const tituloDia = fechaActual.toLocaleDateString('es-ES', opciones);
 
@@ -333,12 +358,9 @@ function renderizarDia() {
     }
 
     html += '</div>';
-
     if (diaGrid) diaGrid.innerHTML = html;
     asignarEventosClickDia();
 }
-
-// ==================== ASIGNAR EVENTOS CLICK ====================
 
 function asignarEventosClick() {
     const tarjetas = document.querySelectorAll('.calendar-day .event-card');
@@ -373,14 +395,11 @@ function manejarClickEvento(e) {
     }
 }
 
-// ==================== CLICK EN DÍAS ====================
-
 function asignarClickDia() {
     const dias = document.querySelectorAll('.calendar-day');
     dias.forEach(dia => {
         dia.removeEventListener('click', manejarClickDia);
         dia.addEventListener('click', manejarClickDia);
-
         dia.removeEventListener('dragover', dragOver);
         dia.removeEventListener('drop', drop);
         dia.addEventListener('dragover', dragOver);
@@ -403,14 +422,11 @@ function manejarClickDia(e) {
         e.target.closest('.event-card-semana')) {
         return;
     }
-
     const fecha = this.getAttribute('data-fecha');
     if (fecha) {
         abrirModal(null, fecha);
     }
 }
-
-// ==================== DRAG & DROP ====================
 
 function asignarDragDrop() {
     const eventosDrag = document.querySelectorAll('.calendar-day .event-card');
@@ -445,7 +461,6 @@ function drop(e) {
     const eventId = parseInt(e.dataTransfer.getData('text/plain'));
     const nuevaFecha = this.getAttribute('data-fecha');
     const evento = eventos.find(ev => ev.id === eventId);
-
     if (evento && nuevaFecha) {
         evento.fecha = nuevaFecha;
         guardarEventos();
@@ -454,14 +469,11 @@ function drop(e) {
     }
 }
 
-// ==================== CRUD DE EVENTOS ====================
-
 function abrirModal(evento = null, fechaPrefijada = null) {
     if (!modal) return;
     modal.style.display = 'block';
 
     if (evento) {
-        // Modo edición
         document.getElementById('modalTitulo').textContent = 'Editar evento';
         document.getElementById('eventoId').value = evento.id;
         document.getElementById('eventoTitulo').value = evento.titulo;
@@ -475,10 +487,9 @@ function abrirModal(evento = null, fechaPrefijada = null) {
             btnEliminar.style.display = 'block';
             btnEliminar.disabled = false;
         }
-
         eventoEnEdicion = evento;
+        mostrarEventosDelDiaEnModal(evento.fecha);
     } else {
-        // Modo nuevo
         document.getElementById('modalTitulo').textContent = 'Nuevo evento';
         document.getElementById('eventoForm').reset();
         document.getElementById('eventoId').value = '';
@@ -492,8 +503,11 @@ function abrirModal(evento = null, fechaPrefijada = null) {
 
         const btnEliminar = document.getElementById('btnEliminarEvento');
         if (btnEliminar) btnEliminar.style.display = 'none';
-
         eventoEnEdicion = null;
+
+        if (fechaPrefijada) {
+            mostrarEventosDelDiaEnModal(fechaPrefijada);
+        }
     }
 }
 
@@ -523,7 +537,6 @@ function guardarEvento(e) {
         return;
     }
 
-    // Validación de horario duplicado
     let eventosParaVerificar = eventos;
     if (id) {
         eventosParaVerificar = eventos.filter(ev => ev.id != id);
@@ -565,19 +578,21 @@ function guardarEvento(e) {
 
     guardarEventos();
     renderizarVista();
+
+    const fechaActualModal = document.getElementById('eventoFecha').value;
+    if (fechaActualModal) {
+        mostrarEventosDelDiaEnModal(fechaActualModal);
+    }
+
     cerrarModal();
 }
 
-// ==================== FUNCIÓN ELIMINAR CORREGIDA ====================
-
 function eliminarEvento() {
-    // Verificar que hay un evento en edición
     if (!eventoEnEdicion) {
         mostrarNotificacion('❌ No hay evento seleccionado', 'error');
         return;
     }
 
-    // Mostrar confirmación
     const confirmar = confirm(
         `🗑️ ELIMINAR EVENTO\n\n` +
         `¿Estás seguro de que deseas eliminar este evento?\n\n` +
@@ -589,23 +604,12 @@ function eliminarEvento() {
     );
 
     if (confirmar) {
-        // Eliminar el evento
         const idAEliminar = eventoEnEdicion.id;
         eventos = eventos.filter(ev => ev.id !== idAEliminar);
-
-        // Guardar cambios
         guardarEventos();
-
-        // Refrescar la vista
         renderizarVista();
-
-        // Mostrar mensaje de éxito
         mostrarNotificacion(`✅ Evento "${eventoEnEdicion.titulo}" eliminado correctamente`, 'success');
-
-        // CERRAR EL MODAL (esto es lo que faltaba)
         cerrarModal();
-
-        // Limpiar la referencia
         eventoEnEdicion = null;
     }
 }
@@ -617,14 +621,11 @@ function filtrarEventos(eventosLista) {
     return eventosLista.filter(e => e.tipo === tipo);
 }
 
-// ==================== NOTIFICACIONES ====================
-
 function verificarNotificaciones() {
     setInterval(() => {
         const hoy = new Date().toISOString().split('T')[0];
         const ahora = new Date();
         const horaActual = `${ahora.getHours().toString().padStart(2, '0')}:${ahora.getMinutes().toString().padStart(2, '0')}`;
-
         eventos.forEach(evento => {
             if (evento.fecha === hoy && evento.hora === horaActual) {
                 mostrarNotificacion(`🔔 ${evento.titulo}: ${evento.descripcion || 'Recordatorio'}`, 'info');
@@ -639,11 +640,9 @@ function mostrarNotificacion(mensaje, tipo) {
     notif.textContent = mensaje;
     notif.style.display = 'block';
     notif.style.background = tipo === 'error' ? '#dc3545' : tipo === 'success' ? '#28a745' : '#17a2b8';
-
     setTimeout(() => {
         notif.style.display = 'none';
     }, 3000);
 }
 
-// Iniciar aplicación
 init();
