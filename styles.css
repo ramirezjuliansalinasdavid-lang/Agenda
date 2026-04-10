@@ -1,0 +1,1251 @@
+/* ==================== RESET Y NORMALIZACIÓN ==================== */
+
+/*
+ * Selector universal (*) - Aplica a TODOS los elementos HTML
+ * Elimina márgenes y paddings por defecto que los navegadores añaden
+ * box-sizing: border-box hace que el padding y borde no aumenten el ancho total
+ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*
+ * Estilos base para el cuerpo de la página
+ * Se aplica a la etiqueta <body>
+ */
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+/* ==================== VARIABLES CSS (TEMA CLARO) ==================== */
+
+/*
+ * :root es la pseudo-clase que representa el elemento raíz (<html>)
+ * Aquí se definen variables CSS globales para el tema claro
+ */
+:root {
+    /* Colores principales */
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --sidebar-bg: #ffffff;
+    --text-primary: #202124;
+    --text-secondary: #5f6368;
+    --border-color: #e9ecef;
+    --card-bg: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --hover-bg: #f1f3f4;
+
+    /* Colores de eventos - modo claro */
+    --event-trabajo-bg: linear-gradient(135deg, #e3f2fd 0%, #bbdef5 100%);
+    --event-trabajo-text: #0d47a1;
+    --event-trabajo-border: #1976d2;
+
+    --event-personal-bg: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    --event-personal-text: #4a148c;
+    --event-personal-border: #9c27b0;
+
+    --event-reunion-bg: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    --event-reunion-text: #e65100;
+    --event-reunion-border: #ff9800;
+
+    --event-recordatorio-bg: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    --event-recordatorio-text: #1b5e20;
+    --event-recordatorio-border: #4caf50;
+}
+
+/* ==================== VARIABLES CSS (TEMA OSCURO) ==================== */
+
+body.dark {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --sidebar-bg: #1a1a1a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border-color: #2a2a2a;
+    --card-bg: #1e1e1e;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+    --hover-bg: #2a2a2a;
+
+    /* Colores de eventos - modo oscuro */
+    --event-trabajo-bg: linear-gradient(135deg, #1a3a5c 0%, #0d2a45 100%);
+    --event-trabajo-text: #90caf9;
+    --event-trabajo-border: #42a5f5;
+
+    --event-personal-bg: linear-gradient(135deg, #3a1a5c 0%, #2a0d45 100%);
+    --event-personal-text: #ce93d8;
+    --event-personal-border: #ab47bc;
+
+    --event-reunion-bg: linear-gradient(135deg, #5c3a1a 0%, #452a0d 100%);
+    --event-reunion-text: #ffcc80;
+    --event-reunion-border: #ffa726;
+
+    --event-recordatorio-bg: linear-gradient(135deg, #1a5c2e 0%, #0d4520 100%);
+    --event-recordatorio-text: #a5d6a7;
+    --event-recordatorio-border: #66bb6a;
+}
+
+/* ==================== LAYOUT PRINCIPAL ==================== */
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar moderno */
+.sidebar {
+    width: 280px;
+    background: var(--sidebar-bg);
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border-color);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: all 0.3s;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+    background: var(--bg-primary);
+}
+
+/* ==================== LOGO ==================== */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.logo i {
+    font-size: 2rem;
+    background: linear-gradient(135deg, #4285f4, #8b9dc3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.logo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #4285f4, #8b9dc3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ==================== BOTONES ==================== */
+
+.btn-primary {
+    width: 100%;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, #4285f4, #3367d6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.vistas h3,
+.filtros h3 {
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.vista-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.vista-btn {
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s;
+    color: var(--text-primary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.vista-btn i {
+    width: 20px;
+    font-size: 1.1rem;
+}
+
+.vista-btn:hover {
+    background: var(--hover-bg);
+    transform: translateX(4px);
+}
+
+.vista-btn.active {
+    background: linear-gradient(135deg, #4285f4, #3367d6);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==================== FILTROS ==================== */
+
+.filtros {
+    margin: 1.5rem 0;
+}
+
+.filtros select {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.filtros select:hover {
+    border-color: #4285f4;
+}
+
+/* ==================== TOGGLE TEMA ==================== */
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.theme-toggle i {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 26px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #4285f4;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+/* ==================== CABECERA CALENDARIO ==================== */
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    background: var(--card-bg);
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-header button {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.calendar-header button:hover {
+    background: var(--hover-bg);
+    transform: scale(1.02);
+}
+
+#fechaActual {
+    flex: 1;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.btn-hoy {
+    background: var(--hover-bg);
+}
+
+/* ==================== CALENDARIO MENSUAL ==================== */
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.calendar-day-header {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.calendar-day {
+    background: var(--card-bg);
+    min-height: 130px;
+    padding: 0.75rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.calendar-day:hover {
+    background: var(--hover-bg);
+    transform: scale(1.01);
+    z-index: 1;
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-day.today {
+    background: linear-gradient(135deg, #e8f0fe, #d4e4fc);
+    position: relative;
+}
+
+.calendar-day.today::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4285f4, #8b9dc3);
+}
+
+body.dark .calendar-day.today {
+    background: linear-gradient(135deg, #1a3a5c, #0d2a45);
+}
+
+.day-number {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+/* ==================== TARJETAS DE EVENTOS MEJORADAS ==================== */
+
+.event-card {
+    margin: 4px 0;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+}
+
+.event-card.trabajo {
+    background: var(--event-trabajo-bg);
+    color: var(--event-trabajo-text);
+    border-left-color: var(--event-trabajo-border);
+}
+
+.event-card.personal {
+    background: var(--event-personal-bg);
+    color: var(--event-personal-text);
+    border-left-color: var(--event-personal-border);
+}
+
+.event-card.reunion {
+    background: var(--event-reunion-bg);
+    color: var(--event-reunion-text);
+    border-left-color: var(--event-reunion-border);
+}
+
+.event-card.recordatorio {
+    background: var(--event-recordatorio-bg);
+    color: var(--event-recordatorio-text);
+    border-left-color: var(--event-recordatorio-border);
+}
+
+.event-card:hover {
+    transform: translateX(4px) translateY(-2px);
+    filter: brightness(0.98);
+}
+
+.event-card strong {
+    display: block;
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+}
+
+/* ==================== VISTA SEMANA MEJORADA ==================== */
+
+.semana-view {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1rem;
+    background: transparent;
+}
+
+.semana-dia {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.semana-dia:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.dia-header {
+    text-align: center;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--hover-bg));
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.dia-header strong {
+    font-size: 1rem;
+    display: block;
+}
+
+.dia-header small {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* Tarjetas de eventos en semana */
+.event-card-semana {
+    background: var(--card-bg);
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid;
+    box-shadow: var(--shadow-sm);
+}
+
+.event-card-semana:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+}
+
+.event-card-semana.trabajo {
+    border-left-color: #1976d2;
+    background: var(--event-trabajo-bg);
+    color: var(--event-trabajo-text);
+}
+
+.event-card-semana.personal {
+    border-left-color: #9c27b0;
+    background: var(--event-personal-bg);
+    color: var(--event-personal-text);
+}
+
+.event-card-semana.reunion {
+    border-left-color: #ff9800;
+    background: var(--event-reunion-bg);
+    color: var(--event-reunion-text);
+}
+
+.event-card-semana.recordatorio {
+    border-left-color: #4caf50;
+    background: var(--event-recordatorio-bg);
+    color: var(--event-recordatorio-text);
+}
+
+.event-hora-semana {
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    opacity: 0.8;
+}
+
+.event-titulo-semana {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.event-desc-semana {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.sin-eventos-semana {
+    text-align: center;
+    padding: 2rem 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+.eventos-container-semana {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+/* ==================== VISTA DÍA MEJORADA ==================== */
+
+.dia-view {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.dia-header-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.dia-header-principal h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.btn-agregar-dia {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #4285f4, #3367d6);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-agregar-dia:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Tarjetas de eventos en vista día */
+.event-card-dia {
+    display: flex;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.event-card-dia:hover {
+    transform: translateX(6px);
+    box-shadow: var(--shadow-md);
+}
+
+.event-card-dia.trabajo {
+    background: var(--event-trabajo-bg);
+    border-left: 4px solid #1976d2;
+}
+
+.event-card-dia.personal {
+    background: var(--event-personal-bg);
+    border-left: 4px solid #9c27b0;
+}
+
+.event-card-dia.reunion {
+    background: var(--event-reunion-bg);
+    border-left: 4px solid #ff9800;
+}
+
+.event-card-dia.recordatorio {
+    background: var(--event-recordatorio-bg);
+    border-left: 4px solid #4caf50;
+}
+
+.event-hora-dia {
+    font-weight: 700;
+    min-width: 85px;
+    font-size: 1rem;
+    padding: 0.2rem 0;
+}
+
+.event-info-dia {
+    flex: 1;
+}
+
+.event-titulo-dia {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.event-desc-dia {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+.sin-eventos {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.eventos-container-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* ==================== MODAL MEJORADO ==================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    margin: 5% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 520px;
+    border-radius: 24px;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s;
+}
+
+.modal-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.close {
+    position: absolute;
+    right: 1.2rem;
+    top: 1.2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+/* Formulario del modal */
+#eventoForm input,
+#eventoForm textarea,
+#eventoForm select {
+    width: 100%;
+    padding: 0.85rem;
+    margin: 0.6rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+#eventoForm input:focus,
+#eventoForm textarea:focus,
+#eventoForm select:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+#eventoForm textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-save,
+.btn-delete {
+    flex: 1;
+    padding: 0.85rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #4285f4, #3367d6);
+    color: white;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==================== NOTIFICACIÓN ==================== */
+
+.notificacion {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: none;
+    z-index: 1100;
+    animation: slideIn 0.3s;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+}
+
+/* ==================== DRAG & DROP ==================== */
+
+.event-card.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+/* ==================== SCROLLBAR PERSONALIZADA ==================== */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #4285f4, #8b9dc3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #3367d6, #6b8db3);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 1024px) {
+    .semana-view {
+        gap: 0.75rem;
+    }
+
+    .semana-dia {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px;
+        padding: 1rem 0.5rem;
+    }
+
+    .sidebar h2,
+    .sidebar h3,
+    .sidebar .logo span {
+        display: none;
+    }
+
+    .sidebar .logo {
+        justify-content: center;
+    }
+
+    .main-content {
+        margin-left: 80px;
+        padding: 1rem;
+    }
+
+    .calendar-day {
+        min-height: 90px;
+        padding: 0.4rem;
+    }
+
+    .calendar-day-header {
+        padding: 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .event-card {
+        font-size: 0.55rem;
+        padding: 3px 5px;
+    }
+
+    .semana-view {
+        gap: 0.5rem;
+    }
+
+    .semana-dia {
+        min-height: 350px;
+        padding: 0.5rem;
+    }
+
+    .event-card-semana {
+        padding: 6px;
+    }
+
+    .event-titulo-semana {
+        font-size: 0.7rem;
+    }
+
+    .modal-content {
+        margin: 20% auto;
+        padding: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-header {
+        gap: 0.5rem;
+    }
+
+    .calendar-header button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    #fechaActual {
+        font-size: 1rem;
+    }
+
+    .event-card-dia {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .event-hora-dia {
+        min-width: auto;
+    }
+
+    .dia-header-principal h3 {
+        font-size: 1rem;
+    }
+
+    .btn-agregar-dia {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* ==================== ANIMACIONES ==================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ==================== VALIDACIÓN DE FORMULARIO ==================== */
+
+/* Resaltado de campos con error */
+#eventoHora.error,
+#eventoFecha.error,
+#eventoTitulo.error {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.05) !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Animación de sacudida para el campo en error */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Tooltip de error personalizado */
+.error-tooltip {
+    position: relative;
+}
+
+.error-tooltip::after {
+    content: attr(data-error);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+    animation: fadeIn 0.2s;
+}
+
+/* Indicador visual de conflicto en el calendario */
+.calendar-day.has-conflict {
+    position: relative;
+}
+
+.calendar-day.has-conflict::after {
+    content: '⚠️';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* Evento con conflicto visual */
+.event-card.conflict {
+    animation: pulse 1s infinite;
+    border-left-color: #dc3545 !important;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* Mensaje de advertencia en el modal */
+.warning-message {
+    background: linear-gradient(135deg, #fff3cd, #ffe69c);
+    color: #856404;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 4px solid #ffc107;
+    animation: slideDown 0.3s;
+}
+
+body.dark .warning-message {
+    background: linear-gradient(135deg, #2c2c1a, #3a3a20);
+    color: #ffd966;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Botón eliminar dentro de tarjeta de evento */
+.btn-eliminar-evento {
+    background: rgba(220, 53, 69, 0.1);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #dc3545;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-eliminar-evento:hover {
+    background: #dc3545;
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-eliminar-evento i {
+    font-size: 0.85rem;
+}
+
+/* Ajuste para tarjetas de evento en vista día */
+.event-card-dia {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.event-card-dia:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+}
+
+.event-info-dia {
+    flex: 1;
+}
+
+.btn-eliminar-evento-semana {
+    background: rgba(220, 53, 69, 0.1);
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #dc3545;
+    width: 100%;
+}
+
+.btn-eliminar-evento-semana:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* Mejoras para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    margin: 5% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 520px;
+    border-radius: 24px;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s;
+}
+
+/* Botón eliminar en el modal */
+#btnEliminarEvento {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#btnEliminarEvento:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+#btnEliminarEvento:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Control de visibilidad de vistas */
+.vista {
+    display: none;
+}
+
+.vista.activa {
+    display: block;
+}
+
+/* Asegurar que la vista día también se oculte correctamente */
+#vistaMes,
+#vistaSemana,
+#vistaDia {
+    display: none;
+}
+
+#vistaMes.activa,
+#vistaSemana.activa,
+#vistaDia.activa {
+    display: block;
+}
